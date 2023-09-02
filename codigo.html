@@ -6,27 +6,19 @@
   <script src="config.js"></script>
   <!-- Include the Google Maps JavaScript API with your API key from config.js -->
   <script>
-    var googleMapsApiKey = getGoogleMapsApiKey(); // Function to retrieve API key from config.js
-
-    function getGoogleMapsApiKey() {
-      if (typeof googleMapsApiKey === "undefined") {
-        console.error("Google Maps API key is undefined. Please check config.js.");
-        return "";
-      } else {
-        return googleMapsApiKey;
-      }
-    }
-  </script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=" + googleMapsApiKey></script>
-</head>
-<body>
-  <!-- Add a link that reloads the current page above your existing code -->
-  <a href="#" onclick="location.reload();">Refresh Page</a>
-  
-  <div id="map" style="width: 800px; height: 600px;"></div>
-  <script>
     // Callback function to initialize the map after the Google Maps API is loaded
     function initMap() {
+      var googleMapsApiKey = getGoogleMapsApiKey(); // Function to retrieve API key from config.js
+
+      function getGoogleMapsApiKey() {
+        if (typeof googleMapsApiKey === "undefined") {
+          console.error("Google Maps API key is undefined. Please check config.js.");
+          return "";
+        } else {
+          return googleMapsApiKey;
+        }
+      }
+
       var map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 0, lng: 0 },
         zoom: 10
@@ -82,6 +74,17 @@
         console.error("Failed to fetch data from Coda API: " + error);
       });
     }
+  </script>
+</head>
+<body>
+  <!-- Add a link that reloads the current page above your existing code -->
+  <a href="#" onclick="location.reload();">Refresh Page</a>
+  
+  <div id="map" style="width: 800px; height: 600px;"></div>
+
+  <!-- Initialize the map when the page is loaded -->
+  <script>
+    initMap();
   </script>
 </body>
 </html>
