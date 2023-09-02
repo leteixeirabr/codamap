@@ -22,9 +22,32 @@
     apiScript.src = "https://maps.googleapis.com/maps/api/js?key=" + googleMapsApiKey + "&callback=initMap";
     document.head.appendChild(apiScript);
   </script>
+  <style>
+    /* Style for the fixed header */
+    .fixed-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: white;
+      padding: 10px;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+      z-index: 1000; /* Ensure it's on top of the map */
+    }
+
+    /* Style for the refresh link */
+    .refresh-link {
+      margin-right: 20px;
+    }
+  </style>  
 </head>
 <body>
-  <a href="#" onclick="location.reload();">Atualizar Mapa</a>
+  <!-- Fixed header with text and refresh link -->
+  <div class="fixed-header">
+    <a href="#" class="refresh-link" onclick="location.reload();">Refresh Page</a>
+    <h1>My Fixed Header</h1>
+    <p>This header won't move when you scroll!</p>
+  </div>
   <div id="map" style="width: 800px; height: 600px;"></div>
   <script>
     // Coda API parameters
