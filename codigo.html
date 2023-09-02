@@ -2,8 +2,6 @@
 <html>
 <head>
   <title>Coda Data Map</title>
-  <!-- Include the Google Maps JavaScript API with your API key from config.js -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=" + googleMapsApiKey"></script>
   <!-- Include the config.js file for other configuration information -->
   <script src="config.js"></script>
 </head>
@@ -71,5 +69,7 @@
       });
     }
   </script>
+  <!-- Include the Google Maps JavaScript API with your API key from config.js -->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&callback=initMap"></script>
 </body>
 </html>
