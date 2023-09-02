@@ -4,6 +4,20 @@
   <title>Coda Data Map</title>
   <!-- Include the config.js file for other configuration information -->
   <script src="config.js"></script>
+  <!-- Include the Google Maps JavaScript API with your API key from config.js -->
+  <script>
+    var googleMapsApiKey = getGoogleMapsApiKey(); // Function to retrieve API key from config.js
+
+    function getGoogleMapsApiKey() {
+      if (typeof googleMapsApiKey === "undefined") {
+        console.error("Google Maps API key is undefined. Please check config.js.");
+        return "";
+      } else {
+        return googleMapsApiKey;
+      }
+    }
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=" + googleMapsApiKey></script>
 </head>
 <body>
   <!-- Add a link that reloads the current page above your existing code -->
@@ -69,7 +83,5 @@
       });
     }
   </script>
-  <!-- Include the Google Maps JavaScript API with your API key from config.js -->
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&callback=initMap"></script>
 </body>
 </html>
