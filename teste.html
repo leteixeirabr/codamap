@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Config</title>
+  <!-- Include the config.js file for other configuration information -->
+  <script src="config.js"></script>
+</head>
+<body>
+  <div id="result"></div>
+  <script>
+    // Create a variable containing the URL
+    var googleMapsApiUrl = "https://maps.googleapis.com/maps/api/js?key=" + googleMapsApiKey;
+
+    // Display the URL on the web page
+    document.getElementById('result').textContent = googleMapsApiUrl;
+  </script>
+</body>
+</html>
