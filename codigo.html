@@ -1,20 +1,15 @@
-Código Coda e Google Maps Api que funciona
-
 <!DOCTYPE html>
 <html>
 <head>
   <title>Coda Data Map</title>
   <!-- Include the Google Maps JavaScript API with your API key -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIycIFGctggBUZmtOLUIYL3fOJucFLRN0"
-  ></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY"></script>
+  <!-- Include the config.js file for other configuration information -->
+  <script src="config.js"></script>
 </head>
 <body>
   <div id="map" style="width: 800px; height: 600px;"></div>
   <script>
-    // Coda API parameters
-    var codaApiToken = "e34e4706-e5cd-47a2-b8ce-2c4ac566e634";
-    var codaApiUrl = "https://coda.io/apis/v1/docs/Ur_U805_WO/tables/table-TU86XjKyBJ/rows?useColumnNames=true";
-
     // Initialize the Google Map
     var map = new google.maps.Map(document.getElementById('map'), {
       center: { lat: 0, lng: 0 },
@@ -40,28 +35,33 @@ Código Coda e Google Maps Api que funciona
       // Loop through the data and add markers
       for (var i = 0; i < codaData.length; i++) {
         var name = codaData[i].values.Name;
-        var latitude = parseFloat(codaData[i].values.Latitude);
-        var longitude = parseFloat(codaData[i].values.Longitude);
+        var address = codaData[i].values.Address;
 
-        // Check if latitude and longitude are valid numbers
-        if (!isNaN(latitude) && !isNaN(longitude)) {
-          var marker = new google.maps.Marker({
-            map: map,
-            position: { lat: latitude, lng: longitude },
-            title: name
-          });
+        // Use the Google Maps Geocoding API to convert the address to coordinates
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({ address: address }, function(results, status) {
+          if (status === "OK" && results[0]) {
+            var latitude = results[0].geometry.location.lat();
+            var longitude = results[0].geometry.location.lng();
 
-          // Add the marker's position to the bounds object
-          bounds.extend(new google.maps.LatLng(latitude, longitude));
+            var marker = new google.maps.Marker({
+              map: map,
+              position: { lat: latitude, lng: longitude },
+              title: name
+            });
 
-          // Add a click event listener to open the info window when a marker is clicked
-          marker.addListener('click', function() {
-            infoWindow.setContent(this.getTitle()); // Set the content of the info window to the marker's title (name)
-            infoWindow.open(map, this); // Open the info window above the clicked marker
-          });
-        } else {
-          console.warn("Skipping marker with invalid coordinates: " + name);
-        }
+            // Add the marker's position to the bounds object
+            bounds.extend(new google.maps.LatLng(latitude, longitude));
+
+            // Add a click event listener to open the info window when a marker is clicked
+            marker.addListener('click', function() {
+              infoWindow.setContent(this.getTitle()); // Set the content of the info window to the marker's title (name)
+              infoWindow.open(map, this); // Open the info window above the clicked marker
+            });
+          } else {
+            console.warn("Skipping marker with invalid address: " + name);
+          }
+        });
       }
 
       // Fit the map to the bounds containing all valid markers
@@ -73,6 +73,3 @@ Código Coda e Google Maps Api que funciona
   </script>
 </body>
 </html>
-
-
-
