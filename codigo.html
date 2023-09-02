@@ -2,23 +2,27 @@
 <html>
 <head>
   <title>Coda Data Map</title>
+  <!-- Include the config.js file for other configuration information -->
+  <script src="config.js"></script>
+  <!-- Include the Google Maps JavaScript API with your API key -->
   <script>
-    // Access the Google Maps API key from the environment variable
-const googleMapsApiKey = process.env.GOOGLE_MAPS_API_KEY;
+    var googleMapsApiKey = getGoogleMapsApiKey(); // Function to retrieve API key from config.js
 
-// Check if the API key is defined
-if (!googleMapsApiKey) {
-  console.error("Google Maps API key is not defined in the environment variable.");
-} else {
-  // Construct the API URL with the retrieved API key
-  const apiScript = document.createElement('script');
-  apiScript.src = "https://maps.googleapis.com/maps/api/js?key=" + googleMapsApiKey;
-  document.head.appendChild(apiScript);
-}
+    function getGoogleMapsApiKey() {
+      if (typeof googleMapsApiKey === "undefined") {
+        console.error("Google Maps API key is undefined. Please check config.js.");
+        return "";
+      } else {
+        return googleMapsApiKey;
+      }
+    }
 
+    // Construct the API URL with the retrieved API key
+    var apiScript = document.createElement('script');
+    apiScript.src = "https://maps.googleapis.com/maps/api/js?key=" + googleMapsApiKey;
+    document.head.appendChild(apiScript);
   </script>
 </head>
-
 <body>
   <div id="map" style="width: 800px; height: 600px;"></div>
   <script>
