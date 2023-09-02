@@ -4,21 +4,35 @@
   <title>Coda Data Map</title>
   <!-- Include the config.js file for other configuration information -->
   <script src="config.js"></script>
-  <!-- Include the Google Maps JavaScript API with your API key from config.js -->
+  <!-- Include the Google Maps JavaScript API with your API key -->
   <script>
+    var googleMapsApiKey = getGoogleMapsApiKey(); // Function to retrieve API key from config.js
+
+    function getGoogleMapsApiKey() {
+      if (typeof googleMapsApiKey === "undefined") {
+        console.error("Google Maps API key is undefined. Please check config.js.");
+        return "";
+      } else {
+        return googleMapsApiKey;
+      }
+    }
+
+    // Construct the API URL with the retrieved API key and callback function
+    var apiScript = document.createElement('script');
+    apiScript.src = "https://maps.googleapis.com/maps/api/js?key=" + googleMapsApiKey + "&callback=initMap";
+    document.head.appendChild(apiScript);
+  </script>
+</head>
+<body>
+  <div id="map" style="width: 800px; height: 600px;"></div>
+  <script>
+    // Coda API parameters
+    var codaApiToken = "e34e4706-e5cd-47a2-b8ce-2c4ac566e634";
+    var codaApiUrl = "https://coda.io/apis/v1/docs/Ur_U805_WO/tables/table-TU86XjKyBJ/rows?useColumnNames=true";
+
     // Callback function to initialize the map after the Google Maps API is loaded
     function initMap() {
-      var googleMapsApiKey = getGoogleMapsApiKey(); // Function to retrieve API key from config.js
-
-      function getGoogleMapsApiKey() {
-        if (typeof googleMapsApiKey === "undefined") {
-          console.error("Google Maps API key is undefined. Please check config.js.");
-          return "";
-        } else {
-          return googleMapsApiKey;
-        }
-      }
-
+      // Initialize the Google Map
       var map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 0, lng: 0 },
         zoom: 10
@@ -30,7 +44,7 @@
       // Create an empty LatLngBounds object to contain all markers
       var bounds = new google.maps.LatLngBounds();
 
-      // Fetch data from Coda API using values from config.js
+      // Fetch data from Coda API
       fetch(codaApiUrl, {
         headers: {
           "Authorization": "Bearer " + codaApiToken
@@ -74,17 +88,6 @@
         console.error("Failed to fetch data from Coda API: " + error);
       });
     }
-  </script>
-</head>
-<body>
-  <!-- Add a link that reloads the current page above your existing code -->
-  <a href="#" onclick="location.reload();">Refresh Page</a>
-  
-  <div id="map" style="width: 800px; height: 600px;"></div>
-
-  <!-- Initialize the map when the page is loaded -->
-  <script>
-    initMap();
   </script>
 </body>
 </html>
