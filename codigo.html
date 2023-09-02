@@ -4,17 +4,18 @@
   <title>Coda Data Map</title>
   <script>
     // Access the Google Maps API key from the environment variable
-    var googleMapsApiKey = process.env.GOOGLE_MAPS_API_KEY;
+const googleMapsApiKey = process.env.GOOGLE_MAPS_API_KEY;
 
-    // Check if the API key is defined
-    if (!googleMapsApiKey) {
-      console.error("Google Maps API key is not defined in the environment variable.");
-    } else {
-      // Construct the API URL with the retrieved API key
-      var apiScript = document.createElement('script');
-      apiScript.src = "https://maps.googleapis.com/maps/api/js?key=" + googleMapsApiKey;
-      document.head.appendChild(apiScript);
-    }
+// Check if the API key is defined
+if (!googleMapsApiKey) {
+  console.error("Google Maps API key is not defined in the environment variable.");
+} else {
+  // Construct the API URL with the retrieved API key
+  const apiScript = document.createElement('script');
+  apiScript.src = "https://maps.googleapis.com/maps/api/js?key=" + googleMapsApiKey;
+  document.head.appendChild(apiScript);
+}
+
   </script>
 </head>
 
